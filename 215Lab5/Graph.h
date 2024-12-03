@@ -65,6 +65,58 @@ public:
 
 	int nextNeighbor(int v, int w)
 	{
-
+		for (int i = w + 1; i < numVertex; i++)
+		{
+			if (matrix[v][i] != 0)
+			{
+				return i;
+			}
+		}
+		return numVertex;
 	}
+
+	void setWeight(int v1, int v2, int weight)
+	{
+		// Not sure if this works correctly yet
+		if (weight <= 0)
+		{
+			throw std::invalid_argument("Illegal weight value");
+		}
+
+		if (matrix[v1][v2] == 0)
+			numEdge++;
+
+		matrix[v1][v2] = weight;
+	}
+
+	void deleteEdge(int v1, int v2)
+	{
+		if (matrix[v1][v2] != 0)
+		{
+			numEdge--;
+		}
+		matrix[v1][v2] = 0;
+	}
+
+	bool isEdge(int v1, int v2)
+	{
+		return matrix[v1][v2] != 0;
+	}
+
+	int weight(int v1, int v2)
+	{
+		return matrix[v1][v2];
+	}
+
+	int getMark(int v)
+	{
+		return mark[v];
+	}
+
+	void setMark(int v, int value)
+	{
+		mark[v] = value;
+	}
+
+
 };

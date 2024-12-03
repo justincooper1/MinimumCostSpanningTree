@@ -40,7 +40,7 @@ public:
 
 	// Getters and setters for the mark value of a vertex
 	virtual int getMark(int v) = 0;
-	virtual int setMark(int v, int value) = 0;
+	virtual void setMark(int v, int value) = 0;
 
 	// From Prim's Algorithm
 	virtual void AddEdgetoMST(int v1, int v2) = 0;
