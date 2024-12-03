@@ -10,6 +10,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <time.h>  // Used by timing functions
+#include <string>
+#include <memory>
+
+#include "GraphADT.h"
+#include "Graph.h"
+
+using namespace std;
+
+#define UNVISITED = 0;
+#define VISITED = 1;
 
 // Now all the standard names that we use
 using std::cout;
