@@ -109,3 +109,122 @@ ostream& operator<<(ostream& s, const Int& i)
   { return s << i.key(); }
 ostream& operator<<(ostream& s, const Int* i)
   { return s << i->key(); }
+
+// Find min cost vertex
+int minVertex(GraphADT* G, int* D)
+{
+    int i, v = -1;
+
+    for (i = 0; i < G->numVertices(); i++)
+    {
+        if (G->getMark(i) == UNVISITED)
+        {
+            v = i; break;
+        }
+    }
+
+    for (i++; i < G->numVertices(); i++)
+    {
+        if ((G->getMark(i) == UNVISITED) && (D[i] < D[v]))
+            v = i;
+    }
+
+    return v;
+}
+
+void setMatrix(GraphADT* graph, int start, int* weights, int* vertices)
+{
+    int less = INFINITY;
+    int index = 0;
+
+    // increment through each row
+    for (int row = 0; row < graph->numVertices(); row++)
+    {
+        if (row != start)
+        {
+            // go to each item in the row
+            for (int col = row + 1; col < graph->numVertices(); col++)
+            {
+                if (vertices[row] == col && vertices[row] > 0)
+                    graph->setWeight(row, col, weights[row]);
+                else
+                {
+                    graph->deleteEdge(row, col);
+                    graph->deleteEdge(col, row);
+                }
+            }
+        }
+
+        else
+        {
+            for (int col = row; col < graph->numVertices(); col++)
+            {
+                // if least needs to be updated
+                if (less > graph->weight(row, col) &&
+                    graph->weight(row, col) != 0)
+                {
+                    less = graph->weight(row, col);
+                    index = col;
+                }
+
+                // if less is less than current item weight
+                else if (less < graph->weight(row, col))
+                {
+                    graph->deleteEdge(row, col);
+                    graph->deleteEdge(col, row);
+                }
+            }
+
+            // deletes values before less
+            for (int p = row; p < index; p++)
+            {
+                if (less != graph->weight(p, row))
+                {
+                    graph->deleteEdge(row, p);
+                    graph->deleteEdge(p, row);
+                }
+            }
+
+            // set the edge
+            graph->setWeight(row, index, less);
+        }
+    }
+
+}
+
+void Prim(GraphADT* G, int* D, int s)
+{
+    unique_ptr<int[]> V(new int[G->numVertices()]);
+    int i, w;
+
+    for (int i = 0; i < G->numVertices(); i++)
+        D[i] = INFINITY;
+
+    D[s] = 0;
+
+    for (i = 0; i < G->numVertices(); i++)
+    {
+        int v = minVertex(G, D);
+
+        G->setMark(v, VISITED);
+
+
+        if (v != s)
+            G->AddEdgetoMST(V[v], v);
+
+        if (D[v] == INFINITY)
+            return;
+
+        for (w = G->neighbor(v); w < G->numVertices(); w = G->nextNeighbor(v, w))
+        {
+            if (D[w] > G->weight(v, w))
+            {
+                D[w] = G->weight(v, w);
+                V[w] = v;
+            }
+        }
+    }
+
+    // sets graph matrix
+    setMatrix(G, s, D, V.get());
+}
