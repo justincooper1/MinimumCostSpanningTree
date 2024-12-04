@@ -18,8 +18,8 @@
 
 using namespace std;
 
-#define UNVISITED = 0;
-#define VISITED = 1;
+#define UNVISITED = 0
+#define VISITED = 1
 
 // Now all the standard names that we use
 using std::cout;
@@ -117,7 +117,7 @@ int minVertex(GraphADT* G, int* D)
 
     for (i = 0; i < G->numVertices(); i++)
     {
-        if (G->getMark(i) == UNVISITED)
+        if (G->getMark(i) == 0)
         {
             v = i; break;
         }
@@ -125,7 +125,7 @@ int minVertex(GraphADT* G, int* D)
 
     for (i++; i < G->numVertices(); i++)
     {
-        if ((G->getMark(i) == UNVISITED) && (D[i] < D[v]))
+        if ((G->getMark(i) == 0) && (D[i] < D[v]))
             v = i;
     }
 
@@ -206,7 +206,7 @@ void Prim(GraphADT* G, int* D, int s)
     {
         int v = minVertex(G, D);
 
-        G->setMark(v, VISITED);
+        G->setMark(v, 1);
 
 
         if (v != s)

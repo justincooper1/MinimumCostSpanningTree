@@ -134,6 +134,12 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphADT.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="matrix.txt" />
+    <Text Include="matrixoutput.txt" />
+    <Text Include="matrixoutput2.txt" />
+    <Text Include="matrixoutput3.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
